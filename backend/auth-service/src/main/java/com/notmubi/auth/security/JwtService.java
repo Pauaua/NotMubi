@@ -22,8 +22,12 @@ public class JwtService {
     @Value("${jwt.expiration-ms}")
     private long expirationMs;
 
-    public String generateToken(String username, String role) {
+    /**
+     * Genera un token JWT. Ahora incluye userId como claim.
+     */
+    public String generateToken(Long userId, String username, String role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);   // 👈 NUEVO
         claims.put("role", role);
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
@@ -43,6 +47,10 @@ public class JwtService {
 
     public String extractRole(String token) {
         return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
+    public Long extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", Long.class));
     }
 
     public boolean isTokenValid(String token, String username) {

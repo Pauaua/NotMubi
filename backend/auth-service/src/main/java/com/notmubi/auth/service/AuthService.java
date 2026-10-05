@@ -37,7 +37,8 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user.getUsername(), user.getRole());
+        // 👈 ahora pasamos también el userId
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole());
 
         return AuthResponse.builder()
                 .token(token)
@@ -48,7 +49,6 @@ public class AuthService {
     }
 
     public AuthResponse login(String username, String password) {
-        // Esto lanza excepción si las credenciales son incorrectas
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
@@ -56,7 +56,8 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        String token = jwtService.generateToken(user.getUsername(), user.getRole());
+        // 👈 ahora pasamos también el userId
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole());
 
         return AuthResponse.builder()
                 .token(token)

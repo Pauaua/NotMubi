@@ -1,0 +1,16 @@
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\client\AuthClient.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\client\UserDTO.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\controller\PlanController.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\controller\SubscriptionController.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\dto\PlanDTO.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\dto\SubscribeRequest.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\dto\SubscriptionDTO.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\dto\SubscriptionWithUserDTO.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\entity\Plan.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\entity\Subscription.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\entity\SubscriptionStatus.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\repository\PlanRepository.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\repository\SubscriptionRepository.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\service\PlanService.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\service\SubscriptionService.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\subscription-service\src\main\java\com\notmubi\subscription\SubscriptionServiceApplication.java
