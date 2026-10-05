@@ -17,6 +17,10 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
 
 eureka:
   client:

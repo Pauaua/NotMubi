@@ -1,5 +1,6 @@
 package com.notmubi.catalog.controller;
 
+import com.notmubi.catalog.dto.MovieWithUserDTO;
 import com.notmubi.catalog.entity.CultLevel;
 import com.notmubi.catalog.entity.Movie;
 import com.notmubi.catalog.service.MovieService;
@@ -17,6 +18,8 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
+
+    // ---------- Bloque 1: CRUD básico ----------
 
     @GetMapping
     public List<Movie> getAll() {
@@ -53,5 +56,14 @@ public class MovieController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         movieService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // ---------- Bloque 3: peli + usuario (Feign al auth-service) ----------
+
+    @GetMapping("/{movieId}/with-user/{userId}")
+    public MovieWithUserDTO getMovieWithUser(
+            @PathVariable Long movieId,
+            @PathVariable Long userId) {
+        return movieService.getMovieWithUser(movieId, userId);
     }
 }

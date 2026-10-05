@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: notmubi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: notmubi
+      POSTGRES_PASSWORD: notmubi
+      POSTGRES_DB: notmubi_catalog
+    ports:
+      - "5432:5432"
+    volumes:
+      - notmubi_pgdata:/var/lib/postgresql/data
+      - ./docker/init-db:/docker-entrypoint-initdb.d
+    networks:
+      - notmubi-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: notmubi-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@notmubi.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - notmubi-network
+
+volumes:
+  notmubi_pgdata:
+
+networks:
+  notmubi-network:
+    driver: bridge

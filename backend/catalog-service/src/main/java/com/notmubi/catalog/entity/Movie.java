@@ -19,7 +19,7 @@ public class Movie {
     private Long id;
 
     @NotBlank(message = "El título es obligatorio")
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String title;
 
     @NotNull(message = "El año es obligatorio")
