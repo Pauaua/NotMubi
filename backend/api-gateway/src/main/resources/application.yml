@@ -15,6 +15,8 @@ spring:
           uri: lb://catalog-service
           predicates:
             - Path=/api/movies/**
+          filters:
+            - JwtAuthFilter
 
 eureka:
   client:
@@ -22,6 +24,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+jwt:
+  secret: notmubi-super-secret-key-for-jwt-signing-change-in-production-1234567890
 
 management:
   endpoints:
