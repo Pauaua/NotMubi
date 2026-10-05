@@ -1,0 +1,11 @@
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\AuthServiceApplication.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\config\SecurityConfig.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\controller\AuthController.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\dto\AuthResponse.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\dto\LoginResponse.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\dto\RegisterRequest.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\entity\User.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\repository\UserRepository.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\security\JwtService.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\com\notmubi\auth\service\AuthService.java
+D:\Users\Wasp\Documents\Programasound\MICROSERVICIOS\NotMubi\backend\auth-service\src\main\java\test\java\com\notmubi\auth\AuthServiceApplicationTests.java
