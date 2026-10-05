@@ -1,0 +1,18 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    register-with-eureka: false   # este servidor no se registra a sí mismo
+    fetch-registry: false         # no necesita descargar el registro (él ES el registro)
+  server:
+    enable-self-preservation: false   # útil en desarrollo, no en producción
+
+logging:
+  level:
+    com.netflix.eureka: WARN
+    com.netflix.discovery: WARN
