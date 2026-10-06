@@ -19,7 +19,7 @@ public class Movie {
     private Long id;
 
     @NotBlank(message = "El título es obligatorio")
-    @Column(nullable = false, unique=true)
+    @Column(nullable = false)
     private String title;
 
     @NotNull(message = "El año es obligatorio")
@@ -36,4 +36,19 @@ public class Movie {
     private CultLevel cultLevel;
 
     private Double rating;
+
+    // ---------- NUEVOS CAMPOS PARA VIDEO ----------
+
+    @Column(name = "video_url", length = 500)
+    private String videoUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "video_provider")
+    private VideoProvider videoProvider;
+
+    @Column(name = "thumbnail_url", length = 500)
+    private String thumbnailUrl;
+
+    @Column(name = "duration_minutes")
+    private Integer durationMinutes;
 }

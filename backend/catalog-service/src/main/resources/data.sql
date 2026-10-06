@@ -1,14 +1,13 @@
 -- Películas malas de culto precargadas para NotMubi
--- Solo se insertan si no existen (por el título)
 
-INSERT INTO movies (title, release_year, director, cult_level, rating, synopsis) VALUES
-('The Room', 2003, 'Tommy Wiseau', 'LEGENDARY', 1.5, 'You are tearing me apart, Lisa! Una obra maestra incomprendida del cine independiente.'),
-('Sharknado', 2013, 'Anthony C. Ferrante', 'SO_BAD_IT_IS_GOOD', 3.5, 'Tiburones en un tornado. Sí, literalmente. Y hay 5 secuelas.'),
-('Plan 9 from Outer Space', 1959, 'Ed Wood', 'LEGENDARY', 2.0, 'Los extraterrestres quieren conquistar la Tierra resucitando muertos. Considerada la peor película de la historia.'),
-('Troll 2', 1990, 'Claudio Fragasso', 'SO_BAD_IT_IS_GOOD', 2.5, 'No aparece ningún troll. Es sobre goblins vegetarianos. La escena del pop corn es legendaria.'),
-('Manos: The Hands of Fate', 1966, 'Harold P. Warren', 'LEGENDARY', 1.0, 'Un vendedor de fertilizantes hizo esta peli por una apuesta. El personaje "Torgo" merece estudio aparte.'),
-('Birdemic: Shock and Terror', 2010, 'James Nguyen', 'SO_BAD_IT_IS_GOOD', 2.0, 'Los pájaros atacan. Los efectos especiales son tan malos que son arte.'),
-('The Disaster Artist', 2017, 'James Franco', 'HIDDEN_GEM', 7.5, 'La peli sobre cómo se hizo The Room. Esta sí es buena, pero es de culto obligatorio.'),
-('Miami Connection', 1987, 'Y.K. Kim', 'HIDDEN_GEM', 4.0, 'Ninjas, moteros, Tae Kwon Do y una banda de rock. Todo lo que está mal hecho, hecho con amor.'),
-('Samurai Cop', 1991, 'Amir Shervan', 'SO_BAD_IT_IS_GOOD', 3.0, 'Policía con peluca que se quita y se pone. Escenas de acción sin sentido. Diálogos imposibles.'),
-('The Amazing Bulk', 2012, 'Lewis Schoenbrun', 'LEGENDARY', 1.5, 'Un científico se convierte en una masa morada con CGI de 1995. Es tan mala que duele.');
+INSERT INTO movies (title, release_year, director, cult_level, rating, synopsis, video_url, video_provider, thumbnail_url, duration_minutes) VALUES
+('The Room', 2003, 'Tommy Wiseau', 'LEGENDARY', 1.5, 'You are tearing me apart, Lisa! Una obra maestra incomprendida del cine independiente.', 'https://www.youtube.com/watch?v=mQ4KzCl8okY', 'YOUTUBE', NULL, 99),
+('Sharknado', 2013, 'Anthony C. Ferrante', 'SO_BAD_IT_IS_GOOD', 3.5, 'Tiburones en un tornado. Sí, literalmente. Y hay 5 secuelas.', 'https://www.youtube.com/watch?v=iwsqFR5bh6Q', 'YOUTUBE', NULL, 86),
+('Plan 9 from Outer Space', 1959, 'Ed Wood', 'LEGENDARY', 2.0, 'Los extraterrestres quieren conquistar la Tierra resucitando muertos. Considerada la peor película de la historia.', 'https://www.youtube.com/watch?v=Y0i4Zk4tW-E', 'YOUTUBE', NULL, 79),
+('Troll 2', 1990, 'Claudio Fragasso', 'SO_BAD_IT_IS_GOOD', 2.5, 'No aparece ningún troll. Es sobre goblins vegetarianos. La escena del pop corn es legendaria.', 'https://www.youtube.com/watch?v=9YdV7hC2CuQ', 'YOUTUBE', NULL, 95),
+('Manos: The Hands of Fate', 1966, 'Harold P. Warren', 'LEGENDARY', 1.0, 'Un vendedor de fertilizantes hizo esta peli por una apuesta. El personaje Torgo merece estudio aparte.', 'https://www.youtube.com/watch?v=K9nA6nJfC0U', 'YOUTUBE', NULL, 74),
+('Birdemic: Shock and Terror', 2010, 'James Nguyen', 'SO_BAD_IT_IS_GOOD', 2.0, 'Los pájaros atacan. Los efectos especiales son tan malos que son arte.', 'https://www.youtube.com/watch?v=cP5c3T2L0zY', 'YOUTUBE', NULL, 93),
+('The Disaster Artist', 2017, 'James Franco', 'HIDDEN_GEM', 7.5, 'La peli sobre cómo se hizo The Room. Esta sí es buena, pero es de culto obligatorio.', 'https://www.youtube.com/watch?v=cMKX2tE5Luk', 'YOUTUBE', NULL, 104),
+('Miami Connection', 1987, 'Y.K. Kim', 'HIDDEN_GEM', 4.0, 'Ninjas, moteros, Tae Kwon Do y una banda de rock. Todo lo que está mal hecho, hecho con amor.', 'https://www.youtube.com/watch?v=Zl8fHqY7PdU', 'YOUTUBE', NULL, 85),
+('Samurai Cop', 1991, 'Amir Shervan', 'SO_BAD_IT_IS_GOOD', 3.0, 'Policía con peluca que se quita y se pone. Escenas de acción sin sentido. Diálogos imposibles.', 'https://www.youtube.com/watch?v=7D6N1C1S2-c', 'YOUTUBE', NULL, 96),
+('The Amazing Bulk', 2012, 'Lewis Schoenbrun', 'LEGENDARY', 1.5, 'Un científico se convierte en una masa morada con CGI de 1995. Es tan mala que duele.', 'https://www.youtube.com/watch?v=3Sh6O-e_x_w', 'YOUTUBE', NULL, 75);

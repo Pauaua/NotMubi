@@ -19,7 +19,12 @@ powershell
 mvn -pl backend/catalog-service spring-boot:run
 Puerto: 8082
 
-4️⃣ API Gateway — el último (necesita que los demás estén arriba)
+4️⃣ Subscription-Service 
+powershell
+mvn -pl backend/subscription-service spring-boot:run
+
+Finalmente: 
+API Gateway — el último (necesita que los demás estén arriba)
 powershell
 
 mvn -pl backend/api-gateway spring-boot:run
