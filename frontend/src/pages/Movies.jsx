@@ -9,11 +9,13 @@ export default function Movies() {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, loading: authLoading } = useAuth();
 
     useEffect(() => {
-        loadMovies();
-    }, []);
+        if (isAuthenticated) {
+            loadMovies();
+        }
+    }, [isAuthenticated]);
 
     useEffect(() => {
         if (!search) {
@@ -39,6 +41,8 @@ export default function Movies() {
             setLoading(false);
         }
     };
+
+    if (authLoading) return <div className="container"><div className="loading">Cargando...</div></div>;
 
     if (!isAuthenticated) {
         return (

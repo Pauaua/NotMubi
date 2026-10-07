@@ -26,11 +26,14 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     @Value("${jwt.secret}")
     private String secret;
 
+    /**
+     * Rutas realmente públicas (no requieren NINGÚN token).
+     */
     private static final List<String> PUBLIC_PATHS = List.of(
             "/auth/register",
             "/auth/login",
-            "/actuator",
-            "/api/subscriptions/plans"
+            "/auth/users",
+            "/actuator"
     );
 
     public JwtAuthFilter() {
@@ -47,45 +50,97 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
                 return chain.filter(exchange);
             }
 
+            // Rutas admin: /auth/admin/** SIEMPRE requieren token ADMIN
+            if (path.startsWith("/auth/admin")) {
+                return handleAdminRequest(exchange, chain);
+            }
+
+            // Planes: GET es público, POST/PUT/DELETE requiere ADMIN
+            if (path.startsWith("/api/subscriptions/plans")) {
+                if (HttpMethod.GET.equals(method)) {
+                    return chain.filter(exchange);
+                }
+                return handleAdminRequest(exchange, chain);
+            }
+
             if (isPublicPath(path)) {
                 return chain.filter(exchange);
             }
 
-            String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                return unauthorized(exchange, "Missing or invalid Authorization header");
-            }
-
-            String token = authHeader.substring(7);
-
-            try {
-                Claims claims = Jwts.parser()
-                        .verifyWith(getSigningKey())
-                        .build()
-                        .parseSignedClaims(token)
-                        .getPayload();
-
-                String username = claims.getSubject();
-                String role = claims.get("role", String.class);
-                Long userId = claims.get("userId", Long.class);
-
-                if (requiresAdmin(path, method) && !"ADMIN".equals(role)) {
-                    return forbidden(exchange, "Se requiere rol ADMIN para esta acción");
-                }
-
-                ServerWebExchange mutatedExchange = exchange.mutate()
-                        .request(r -> r
-                                .header("X-User-Username", username)
-                                .header("X-User-Role", role != null ? role : "")
-                                .header("X-User-Id", userId != null ? userId.toString() : ""))
-                        .build();
-
-                return chain.filter(mutatedExchange);
-
-            } catch (Exception e) {
-                return unauthorized(exchange, "Invalid or expired token: " + e.getMessage());
-            }
+            // Resto: requiere token válido
+            return handleAuthenticatedRequest(exchange, chain);
         };
+    }
+
+    private Mono<Void> handleAdminRequest(ServerWebExchange exchange, org.springframework.cloud.gateway.filter.GatewayFilterChain chain) {
+        String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return unauthorized(exchange, "Missing or invalid Authorization header");
+        }
+        String token = authHeader.substring(7);
+
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            String role = claims.get("role", String.class);
+            if (!"ADMIN".equals(role)) {
+                return forbidden(exchange, "Se requiere rol ADMIN para esta acción");
+            }
+
+            String username = claims.getSubject();
+            Long userId = claims.get("userId", Long.class);
+
+            ServerWebExchange mutatedExchange = exchange.mutate()
+                    .request(r -> r
+                            .header("X-User-Username", username)
+                            .header("X-User-Role", role)
+                            .header("X-User-Id", userId != null ? userId.toString() : ""))
+                    .build();
+
+            return chain.filter(mutatedExchange);
+        } catch (Exception e) {
+            return unauthorized(exchange, "Invalid or expired token: " + e.getMessage());
+        }
+    }
+
+    private Mono<Void> handleAuthenticatedRequest(ServerWebExchange exchange, org.springframework.cloud.gateway.filter.GatewayFilterChain chain) {
+        String path = exchange.getRequest().getURI().getPath();
+        String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return unauthorized(exchange, "Missing or invalid Authorization header");
+        }
+        String token = authHeader.substring(7);
+
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            String username = claims.getSubject();
+            String role = claims.get("role", String.class);
+            Long userId = claims.get("userId", Long.class);
+
+            if (requiresAdmin(path, exchange.getRequest().getMethod()) && !"ADMIN".equals(role)) {
+                return forbidden(exchange, "Se requiere rol ADMIN para esta acción");
+            }
+
+            ServerWebExchange mutatedExchange = exchange.mutate()
+                    .request(r -> r
+                            .header("X-User-Username", username)
+                            .header("X-User-Role", role != null ? role : "")
+                            .header("X-User-Id", userId != null ? userId.toString() : ""))
+                    .build();
+
+            return chain.filter(mutatedExchange);
+        } catch (Exception e) {
+            return unauthorized(exchange, "Invalid or expired token: " + e.getMessage());
+        }
     }
 
     private boolean isPublicPath(String path) {
@@ -94,16 +149,16 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
 
     private boolean requiresAdmin(String path, HttpMethod method) {
         if (method == null) return false;
-
-        if (HttpMethod.POST.equals(method) && path.equals("/api/movies")) {
-            return true;
-        }
-
-        if ((HttpMethod.PUT.equals(method) || HttpMethod.DELETE.equals(method))
-                && path.startsWith("/api/movies/")) {
-            return true;
-        }
-
+        // Movies CRUD
+        if (HttpMethod.POST.equals(method) && path.equals("/api/movies")) return true;
+        if ((HttpMethod.PUT.equals(method) || HttpMethod.DELETE.equals(method)) && path.startsWith("/api/movies/")) return true;
+        // Reviews admin
+        if (HttpMethod.POST.equals(method) && path.equals("/api/reviews")) return true;
+        if ((HttpMethod.PUT.equals(method) || HttpMethod.DELETE.equals(method)) && path.startsWith("/api/reviews/")) return true;
+        if (HttpMethod.GET.equals(method) && path.equals("/api/reviews")) return true;
+        // Subscriptions admin
+        if (path.equals("/api/subscriptions/all")) return true;
+        if (HttpMethod.DELETE.equals(method) && path.matches("/api/subscriptions/\\d+")) return true;
         return false;
     }
 
@@ -119,10 +174,8 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(status);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-
         String body = String.format("{\"error\":\"%s\",\"message\":\"%s\"}", error, message);
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
-
         return response.writeWith(Mono.just(buffer));
     }
 

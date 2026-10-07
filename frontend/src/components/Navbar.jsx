@@ -10,20 +10,34 @@ export default function Navbar() {
         navigate('/login');
     };
 
+    const isAdmin = user?.role === 'ADMIN';
+
     return (
         <nav className="navbar">
-            <Link to="/movies" className="navbar-logo">🎬 NotMubi</Link>
+            <Link to={isAdmin ? '/admin' : '/movies'} className="navbar-logo">🎬 NotMubi</Link>
 
             <div className="navbar-links">
-                <Link to="/movies">Catálogo</Link>
-                <Link to="/plans">Planes</Link>
-                {isAuthenticated && <Link to="/my-subscription">Mi suscripción</Link>}
+                {isAdmin ? (
+                    <>
+                        <Link to="/movies">Catálogo</Link>
+                        <Link to="/plans">Planes</Link>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/movies">Catálogo</Link>
+                        <Link to="/plans">Planes</Link>
+                        {isAuthenticated && <Link to="/my-subscription">Mi suscripción</Link>}
+                    </>
+                )}
             </div>
 
             <div className="navbar-user">
                 {isAuthenticated ? (
                     <>
-                        <span className="navbar-username">Hola, {user.username}</span>
+                        <span className="navbar-username">
+                            Hola, {user.username}
+                            {isAdmin && <span className="badge-admin">ADMIN</span>}
+                        </span>
                         <button onClick={handleLogout} className="btn-logout">Salir</button>
                     </>
                 ) : (

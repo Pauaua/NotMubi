@@ -20,13 +20,15 @@ api.interceptors.request.use(
 );
 
 // Interceptor: si el token expira (401), limpia y redirige a login
+// Excepción: rutas /auth/admin/** no deben cerrar la sesión (son errores de permiso del backend)
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response && error.response.status === 401) {
+        const url = error.config?.url || '';
+        const isAdminRoute = url.startsWith('/auth/admin') || url.startsWith('/api/subscriptions/all');
+        if (error.response && error.response.status === 401 && !isAdminRoute) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            // Redirigir solo si no estamos ya en login
             if (!window.location.pathname.startsWith('/login')) {
                 window.location.href = '/login';
             }

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -90,6 +91,30 @@ public class SubscriptionService {
         Subscription saved = subscriptionRepository.save(subscription);
 
         return toDTO(saved);
+    }
+
+    public List<SubscriptionWithUserDTO> getAllSubscriptions() {
+        return subscriptionRepository.findAll().stream()
+                .map(s -> {
+                    UserDTO user;
+                    try {
+                        user = authClient.getUserById(s.getUserId());
+                    } catch (Exception e) {
+                        user = UserDTO.builder().id(s.getUserId()).username("Usuario #" + s.getUserId()).build();
+                    }
+                    return SubscriptionWithUserDTO.builder()
+                            .subscription(toDTO(s))
+                            .user(user)
+                            .build();
+                })
+                .toList();
+    }
+
+    public SubscriptionDTO adminCancel(Long subscriptionId) {
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada: " + subscriptionId));
+        subscription.setStatus(SubscriptionStatus.CANCELLED);
+        return toDTO(subscriptionRepository.save(subscription));
     }
 
     // ---------- helpers ----------

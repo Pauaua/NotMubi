@@ -17,8 +17,8 @@ export default function Login() {
         setLoading(true);
 
         try {
-            await login(username, password);
-            navigate('/movies');
+            const userData = await login(username, password);
+            navigate(userData.role === 'ADMIN' ? '/admin' : '/movies');
         } catch (err) {
             setError('Credenciales incorrectas. Inténtalo de nuevo.');
         } finally {

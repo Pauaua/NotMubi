@@ -6,7 +6,10 @@ import com.notmubi.subscription.dto.SubscriptionWithUserDTO;
 import com.notmubi.subscription.service.SubscriptionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -42,5 +45,16 @@ public class SubscriptionController {
     public SubscriptionDTO cancelMySubscription(
             @RequestHeader("X-User-Id") Long userId) {
         return subscriptionService.cancel(userId);
+    }
+
+    @GetMapping("/all")
+    public List<SubscriptionWithUserDTO> getAllSubscriptions() {
+        return subscriptionService.getAllSubscriptions();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> adminCancelSubscription(@PathVariable Long id) {
+        subscriptionService.adminCancel(id);
+        return ResponseEntity.noContent().build();
     }
 }
