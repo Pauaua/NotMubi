@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const CULT_THEMES = {
@@ -12,23 +12,38 @@ export default function HeroSlider({ movies }) {
     const [current, setCurrent] = useState(0);
     const [fading, setFading] = useState(false);
 
-    const goTo = useCallback((idx) => {
+    const goTo = (idx) => {
         setFading(true);
         setTimeout(() => {
             setCurrent(idx);
             setFading(false);
         }, 400);
-    }, []);
+    };
 
     useEffect(() => {
         if (movies.length < 2) return;
         const timer = setInterval(() => {
-            goTo((prev) => (prev + 1) % movies.length);
+            setCurrent(prev => {
+                const next = (prev + 1) % movies.length;
+                setFading(true);
+                setTimeout(() => setFading(false), 400);
+                return next;
+            });
         }, 4500);
         return () => clearInterval(timer);
-    }, [movies.length, goTo]);
+    }, [movies.length]);
 
-    if (!movies.length) return null;
+    if (!movies.length) return (
+        <section className="hero-slider" style={{ '--glow': '#ff4757', '--from': '#ff4757', '--to': '#c0392b' }}>
+            <div className="hero-bg" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a0505 60%, #0a0a0a 100%)' }} />
+            <div className="hero-glow-orb" style={{ background: 'radial-gradient(circle, #ff475733 0%, transparent 70%)' }} />
+            <div className="hero-content hero-fade-in">
+                <div className="hero-badge" style={{ background: 'linear-gradient(90deg, #ff4757, #c0392b)' }}>🎬 NotMubi</div>
+                <h1 className="hero-title">El cine que no debería existir.<br />Pero existe.</h1>
+                <p className="hero-synopsis">Un catálogo de películas de culto: las legendarias, las tan malas que son buenas, las joyas ocultas y los placeres culpables.</p>
+            </div>
+        </section>
+    );
 
     const movie = movies[current];
     const theme = CULT_THEMES[movie.cultLevel] || CULT_THEMES.SO_BAD_IT_IS_GOOD;

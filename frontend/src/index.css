@@ -14,6 +14,7 @@ body {
 /* Layout */
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 .main-content { flex: 1; padding: 30px 0; }
+.main-content:has(.home) { padding: 0; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .loading { text-align: center; padding: 60px; color: #888; }
 
@@ -1022,8 +1023,12 @@ body {
 
 .why-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+}
+
+@media (max-width: 540px) {
+    .why-grid { grid-template-columns: 1fr; }
 }
 
 .why-card {
