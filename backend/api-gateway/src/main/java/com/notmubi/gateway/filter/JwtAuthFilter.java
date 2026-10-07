@@ -55,6 +55,11 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
                 return handleAdminRequest(exchange, chain);
             }
 
+            // Catálogo: GET público para landing page, escritura requiere ADMIN
+            if (path.startsWith("/api/movies") && HttpMethod.GET.equals(method)) {
+                return chain.filter(exchange);
+            }
+
             // Planes: GET es público, POST/PUT/DELETE requiere ADMIN
             if (path.startsWith("/api/subscriptions/plans")) {
                 if (HttpMethod.GET.equals(method)) {

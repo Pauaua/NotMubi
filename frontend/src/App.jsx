@@ -3,9 +3,11 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import AdminLayout from './components/AdminLayout';
 import AdminRoute from './components/AdminRoute';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Movies from './pages/Movies';
+import SuggestMovie from './pages/SuggestMovie';
 import MovieDetail from './pages/MovieDetail';
 import Plans from './pages/Plans';
 import MySubscription from './pages/MySubscription';
@@ -46,7 +48,10 @@ export default function App() {
                     <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                     <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
-                    <Route path="/" element={<Navigate to="/movies" replace />} />
+                    <Route path="/" element={<AppLayout><Home /></AppLayout>} />
+                    <Route path="/suggest" element={<SuggestMovie />} />
+                    <Route path="/legal" element={<AppLayout><div className="container" style={{padding:'4rem 1rem'}}><h1>Políticas Legales</h1><p style={{color:'#888',marginTop:'1rem'}}>Contenido en construcción.</p></div></AppLayout>} />
+                    <Route path="/privacy" element={<AppLayout><div className="container" style={{padding:'4rem 1rem'}}><h1>Privacidad</h1><p style={{color:'#888',marginTop:'1rem'}}>Contenido en construcción.</p></div></AppLayout>} />
 
                     <Route path="/movies" element={<AppLayout><Movies /></AppLayout>} />
                     <Route path="/movies/:id" element={<PrivateRoute><AppLayout><MovieDetail /></AppLayout></PrivateRoute>} />
