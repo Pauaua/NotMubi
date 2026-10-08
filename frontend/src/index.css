@@ -1027,8 +1027,66 @@ body {
     gap: 1.5rem;
 }
 
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+/* ── Tablet ancho: 768px ── */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar { padding: 14px 16px; }
+    .navbar-links { gap: 12px; }
+    .navbar-links a { font-size: 0.9rem; }
+    .navbar-username { display: none; }
+
+    /* Hero */
+    .hero-content { padding: 0 16px; max-width: 100%; }
+    .hero-synopsis { display: none; }
+
+    /* Sections */
+    .home-section { padding: 4rem 0; }
+    .section-lead { font-size: 1rem; margin-bottom: 2.5rem; }
+
+    /* Plans: 2 columnas en tablet */
+    .plans-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Footer: 2 columnas en tablet */
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ── Móvil: 540px ── */
 @media (max-width: 540px) {
+    /* Navbar */
+    .navbar { padding: 12px 16px; flex-wrap: wrap; gap: 6px; }
+    .navbar-logo { font-size: 1.2rem; }
+    .navbar-links { order: 3; width: 100%; gap: 0; border-top: 1px solid #222; padding-top: 8px; flex-wrap: wrap; }
+    .navbar-links a { font-size: 0.85rem; padding: 4px 0; flex-shrink: 0; }
+    .navbar-user { margin-left: auto; }
+
+    /* Hero */
+    .hero-slider { min-height: 100svh; }
+    .hero-content { padding: 0 16px; }
+    .hero-synopsis { display: none; }
+    .hero-dots { left: 16px; }
+
+    /* Why */
     .why-grid { grid-template-columns: 1fr; }
+    .why-card { padding: 1.5rem; }
+
+    /* Catalog preview: 2 columnas en móvil */
+    .catalog-preview-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Plans: 1 columna en móvil */
+    .plans-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+
+    /* Quote */
+    .quote-banner { padding: 4rem 16px; }
+    .quote-text { font-size: clamp(1.4rem, 6vw, 2rem); }
+
+    /* Footer */
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .suggest-row { grid-template-columns: 1fr; }
 }
 
 .why-card {
@@ -1305,11 +1363,6 @@ body {
     margin-bottom: 3rem;
 }
 
-@media (max-width: 640px) {
-    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .catalog-preview-grid { grid-template-columns: repeat(2, 1fr); }
-    .suggest-row { grid-template-columns: 1fr; }
-}
 
 .footer-brand .footer-logo {
     font-size: 1.3rem;
